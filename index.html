@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="./favicon.ico">
+    </head>
+
+    <body>
+    
+        <nav>
+
+            <div class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="./index.html">
+                    <img src="./img/logo.png" alt="logo" width="30" height="30">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="./index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./about.html">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./contact.html">Contact</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./login.html">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./register.html">Register</a>
+                        </li>
+
+                
+                </div>
+        </nav>
+
+    <div>
+        <div>
+            <h1>Register</h1>
+            <form action="register.php" method="post">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
+                </div>
+                <div class="form-group">
+                    <label for="password2">Confirm Password</label>
+                    <input type="password" class="form-control" id="password2" name="password2" placeholder="Confirm password">
+                </div>
+            
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        <div>
+
+            <?php
+            if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['password2'])) {
+                $username = $_POST['username'];
+                $password = $_POST['password'];
+                $password2 = $_POST['password2'];
+
+                if ($password != $password2) {
+                    echo "Passwords do not match";
+                } else {
+                    $db = new PDO('mysql:host=localhost;dbname=test', 'root', '');
+                    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+                    $stmt = $db->prepare("INSERT INTO users (username, password) VALUES (:username, :password)");
+                    $stmt->bindParam(':username', $username);
+                    $stmt->bindParam(':password', $password);
+                    $stmt->execute();
+                    echo "User created";
+                }
+            }
+            ?>
+
+        </div>
+        <div>
+            <h1>Login</h1>
+            <form action="login.php" method="post">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        <div>
+            <?php
+            if (isset($_POST['username']) && isset($_POST['password'])) {
+                $username = $_POST['username'];
+                $password = $_POST['password'];
+
+                $db = new PDO('mysql:host=localhost;dbname=test', 'root', '');
+                $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+                $stmt = $db->prepare("SELECT * FROM users WHERE username = :username AND password = :password");
+                $stmt->bindParam(':username', $username);
+                $stmt->bindParam(':password', $password);
+                $stmt->execute();
+                $result = $stmt->fetch();
+                if ($result) {
+                    echo "Login successful";
+                } else {
+                    echo "Login failed";
+                }
+            }
+            ?>
+        </div>
+
+        <div>
+            <h1>About</h1>
+            <p>
+                This is a simple web application that allows users to register and login.
+            </p>
+        </div>
+        <div>
+            <h1>Contact</h1>
+            <p>
+                Email: <a href="mailto:
+                <?php
+                $email = "
+                ";
+                echo $email;
+                ?>
+                ">
+                    <?php
+                    $email = "
+                    ";
+                    echo $email;
+                    ?>
+                </a>
+            </p>
+        </div>
+        <div>
+            <h1>Copyright</h1>
+            <p>
+                &copy; <?php echo date("Y"); ?>
+            </p>
+        </div>
+        <div>
+            <h1>Disclaimer</h1>
+            <p>
+                This web application is not intended to be used for any malicious purposes.
+            </p>
+        </div>
+        <div>
+            <h1>Privacy Policy</h1>
+            <p>
+                This web application does not collect any personal information.
+            </p>
+        </div>
+        <div>
+            <h1>Terms of Use</h1>
+            <p>
+                This web application is provided "as is" and without warranty of any kind, either express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and non-infringement.
+            </p>
+        </div>
+        <div>
+            <h1>License</h1>
+            <p>
+                This web application is licensed under the <a href="
+                <?php
+                $license = "
+                ";
+                echo $license;
+                ?>
+                ">
+                    <?php
+                    $license = "
+                    ";
+                    echo $license;
+                    ?>
+                </a>
+            </p>
+        </div>
+        <div>
+            <h1>Version</h1>
+            <p>
+                This web application is version 1.0.
+            </p>
+        </div>
+        <div>
+            <h1>Acknowledgements</h1>
+            <p>
+                This web application is developed by <a href="
+                <?php
+                $acknowledgements = "
+                ";
+                echo $acknowledgements;
+                ?>
+                ">
+                    <?php
+                    $acknowledgements = "
+                    ";
+                    echo $acknowledgements;
+                    ?>
+                </a>
+            </p>
+        </div>
+    </div>
+    <div>
+        <h1>Links</h1>
+        <p>
+            <a href="
+            <?php
+            $links = "
+            ";
+            echo $links;
+            ?>
+            ">
+                <?php
+                $links = "
+                ";
+                echo $links;
+                ?>
+            </a>
+        </p>
+    </div>
+    <div>
+        <h1>Credits</h1>
+        <p>
+            This web application is developed by <a href="
+            <?php
+            $credits = "
+            ";
+            echo $credits;
+            ?>
+            ">
+                <?php
+                $credits = "
+                ";
+                echo $credits;
+                ?>
+            </a>
+        </p>
+    </div>
+    
+    </body>
+</html>
